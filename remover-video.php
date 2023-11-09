@@ -13,7 +13,7 @@ $statement->bindValue( 1, $id);
 
 // Quando o statement é executado, o navegador redireciona o cliente para o seguinte local.
 if ($statement->execute() === false) {
-    header('location: /index.php?sucesso=0');
+    header('location: /?sucesso=0');
 } else {
-    header('location: /index.php?sucesso=1');
+    header('location: /?sucesso=1');
 }
