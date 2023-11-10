@@ -32,6 +32,13 @@ $statement->bindValue(':url', $url);
 $statement->bindValue(':title', $titulo);
 $statement->bindValue(':id', $id, PDO::PARAM_INT);
 
+$video = new \Alura\Mvc\Entity\Video($url, $titulo);
+$video->setId($id);
+
+// Executa o respectivo comando
+$repository = new \Alura\Mvc\Repository\VideoRepository($pdo);
+$repository->update($video); 
+
 // Quando o statement é executado, o navegador redireciona o cliente para o seguinte local.
 if ($statement->execute() === false) {
     header('location: /?sucesso=0');

@@ -18,17 +18,11 @@ if ($titulo === false) {
     exit();
 }
 
-// Insere no BD a seguinte URL e título
-$sql = 'INSERT INTO videos (url, title) VALUES (?, ?)';
-
-$statement = $pdo->prepare($sql);
-
-// Envia os seguintes POSTS para o BD
-$statement->bindValue(1, $url);
-$statement->bindValue(2, $titulo);
+// Executa o respectivo comando
+$repository = new \Alura\Mvc\Repository\VideoRepository($pdo);
 
 // Quando o statement é executado, o navegador redireciona o cliente para o seguinte local.
-if ($statement->execute() === false) {
+if ($repository->add(new \Alura\Mvc\Entity\Video($url, $titulo)) === false) {
     header('Location: /?sucesso=0');
 } else {
     header('Location: /?sucesso=1');

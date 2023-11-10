@@ -3,6 +3,8 @@
 // Define o modo estrito de tipos para garantir uma tipagem rigorosa.
 declare(strict_types=1);
 
+require_once __DIR__ . '/../vendor/autoload.php';
+
 // Verifica se a chave 'PATH_INFO' existe no array $_SERVER ou se é igual a '/'.
 if (!array_key_exists('PATH_INFO', $_SERVER) || $_SERVER['PATH_INFO'] === '/') {
     // Se não houver PATH_INFO ou se for igual a '/', inclui o arquivo 'listagem-videos.php'.

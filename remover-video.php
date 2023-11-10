@@ -11,8 +11,11 @@ $sql = 'DELETE FROM videos WHERE id = ?';
 $statement = $pdo->prepare($sql);
 $statement->bindValue( 1, $id);
 
+// Executa o respectivo comando
+$repository = new \Alura\Mvc\Repository\VideoRepository($pdo);
+
 // Quando o statement é executado, o navegador redireciona o cliente para o seguinte local.
-if ($statement->execute() === false) {
+if ($repository->remove($id) === false) {
     header('location: /?sucesso=0');
 } else {
     header('location: /?sucesso=1');
