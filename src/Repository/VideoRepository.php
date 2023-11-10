@@ -5,6 +5,7 @@ namespace Alura\Mvc\Repository;
 use Alura\Mvc\Entity\Video;
 use PDO;
 
+// Classe responsável pela manipulação dos dados do BD
 class VideoRepository
 {
     // Função construtora
@@ -74,5 +75,22 @@ class VideoRepository
             },
             $videoList
         );
+    }
+
+    public function find(int $id)
+    {
+        $statement = $this->pdo->prepare('SELECT * FROM videos WHERE id = ?;');
+        $statement->bindValue(1, $id, \PDO::PARAM_INT);
+        $statement->execute();
+
+        return $this->hydrateVideo($statement->fetch(\PDO::FETCH_ASSOC));
+    }
+
+    private function hydrateVideo(array $videoData): Video
+    {
+        $video = new Video($videoData['url'], $videoData['title']);
+        $video->setId($videoData['id']);
+
+        return $video;
     }
 }

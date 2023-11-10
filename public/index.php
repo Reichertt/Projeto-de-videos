@@ -1,35 +1,43 @@
 <?php
 
-// Define o modo estrito de tipos para garantir uma tipagem rigorosa.
 declare(strict_types=1);
+
+use Alura\Mvc\Controller\{
+    Controller,
+    DeleteVideoController,
+    EditVideoController,
+    Error404Controller,
+    NewVideoController,
+    VideoFormController,
+    VideoListController
+};
+use Alura\Mvc\Repository\VideoRepository;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-// Verifica se a chave 'PATH_INFO' existe no array $_SERVER ou se é igual a '/'.
+$dbPath = __DIR__ . '/../banco.sqlite';
+$pdo = new PDO("sqlite:$dbPath");
+$videoRepository = new VideoRepository($pdo);
+
 if (!array_key_exists('PATH_INFO', $_SERVER) || $_SERVER['PATH_INFO'] === '/') {
-    // Se não houver PATH_INFO ou se for igual a '/', inclui o arquivo 'listagem-videos.php'.
-    require_once __DIR__ . '/../listagem-videos.php';
+    $controller = new VideoListController($videoRepository);
 } elseif ($_SERVER['PATH_INFO'] === '/novo-video') {
-    // Se PATH_INFO for igual a '/novo-video'.
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        // Se o método da requisição for GET, inclui o arquivo 'formulario.php'.
-        require_once __DIR__ . '/../formulario.php';
+        $controller = new VideoFormController($videoRepository);
     } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Se o método da requisição for POST, inclui o arquivo 'novo-video.php'.
-        require_once __DIR__ . '/../novo-video.php';
+        $controller = new NewVideoController($videoRepository);
     }
 } elseif ($_SERVER['PATH_INFO'] === '/editar-video') {
-    // Se PATH_INFO for igual a '/editar-video'.
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        // Se o método da requisição for GET, inclui o arquivo 'formulario.php'.
-        require_once __DIR__ . '/../formulario.php';
+        $controller = new VideoFormController($videoRepository);
     } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Se o método da requisição for POST, inclui o arquivo 'editar-video.php'.
-        require_once __DIR__ . '/../editar-video.php';
+        $controller = new EditVideoController($videoRepository);
     }
 } elseif ($_SERVER['PATH_INFO'] === '/remover-video') {
-    // Se PATH_INFO for igual a '/remover-video', inclui o arquivo 'remover-video.php'.
-    require_once __DIR__ . '/../remover-video.php';
+    $controller = new DeleteVideoController($videoRepository);
 } else {
-    http_response_code(404);
+    $controller = new Error404Controller();
 }
+
+/** @var \Alura\Mvc\Controller\Controller $controller */
+$controller->processaRequisicao();
