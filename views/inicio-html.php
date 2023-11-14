@@ -1,3 +1,5 @@
+<!-- Responsável pelo início do HTML da página. -->
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
