@@ -26,6 +26,16 @@ $routes = require_once __DIR__ . '/../config/routes.php';
 $pathInfo = $_SERVER['PATH_INFO'] ?? '/';
 $httpMethod = $_SERVER['REQUEST_METHOD'];
 
+$isLoginRoute = $pathInfo === '/login';
+
+// Inicia a sessão
+session_start();
+
+if (!array_key_exists('logado', $_SESSION) && !$isLoginRoute) {
+    header( 'location: /login');
+    return;
+}
+
 $key = "$httpMethod|$pathInfo";
 
 // Verifica se a rota é existente, caso não seja direciona para o erro 404
