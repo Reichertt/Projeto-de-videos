@@ -1,5 +1,6 @@
 <?php
 
+// Traça as rotas que são enviadas via GET e POST
 return [
     'GET|/' => \Alura\Mvc\Controller\VideoListController::class,
     'GET|/novo-video' => \Alura\Mvc\Controller\VideoFormController::class,
