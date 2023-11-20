@@ -31,6 +31,9 @@ $isLoginRoute = $pathInfo === '/login';
 // Inicia a sessão
 session_start();
 
+//substituirá o id da sessão atual com um novo id e manterá a informação da sessão atual
+session_regenerate_id();
+
 if (!array_key_exists('logado', $_SESSION) && !$isLoginRoute) {
     header( 'location: /login');
     return;

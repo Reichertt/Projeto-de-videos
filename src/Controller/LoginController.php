@@ -39,6 +39,14 @@ class LoginController implements Controller
         // Verifica se a senha fornecida coincide com a senha armazenada no banco de dados
         $correctPassword = password_verify($password, $userData['password'] ?? '');
 
+        // Esta função verifica se o hash fornecido implementa o algoritmo e as opções fornecidas. Caso contrário, presume-se que o hash precisa ser refeito
+        if (password_needs_rehash($userData['password'], PASSWORD_ARGON2ID)) {
+            $statement = $this->pdo->prepare('UPDATE users SET password = ? WHERE id = ?');
+            $statement->bindValue(1, password_hash($password, PASSWORD_ARGON2ID));
+            $statement->bindValue(2, $userData['id']);
+            $statement->execute();
+        }
+
         // Redireciona o usuário com base no sucesso ou falha da validação da senha
         if ($correctPassword) {
 
