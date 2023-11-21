@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Alura\Mvc\Repository;
 
 use Alura\Mvc\Entity\Video;
@@ -9,7 +11,7 @@ use PDO;
 class VideoRepository
 {
     // Função construtora
-    public function __construct(private \PDO $pdo)
+    public function __construct(private PDO $pdo)
     {
     }
 
@@ -19,15 +21,15 @@ class VideoRepository
         // Insere no BD a seguinte URL e título
         $sql = 'INSERT INTO videos (url, title, image_path) VALUES (?, ?, ?)';
 
-        $statement = $this->pdo->prepare($sql);
-
         // Envia os seguintes POSTS para o BD
+        $statement = $this->pdo->prepare($sql);
         $statement->bindValue(1, $video->url);
         $statement->bindValue(2, $video->title);
         $statement->bindValue(3, $video->getFilePath());
 
         $result = $statement->execute();
         $id = $this->pdo->lastInsertId();
+
         $video->setId(intval($id));
 
         return $result;

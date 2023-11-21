@@ -1,29 +1,21 @@
-<?php
+<?php require_once __DIR__ . '/inicio-html.php'; ?>
+    <main class="container">
+        <form class="container__formulario" method="post">
+            <h2 class="formulario__titulo">Efetue login</h2>
+                <div class="formulario__campo">
+                    <label class="campo__etiqueta" for="usuario">E-mail</label>
+                    <input name="email" type="email" class="campo__escrita" required
+                        placeholder="Digite seu usuário" id='usuario' />
+                </div>
 
-// Incluí o seguinte arquivo nesse local
-require_once __DIR__ . '/inicio-html.php';
-?>
+                <div class="formulario__campo">
+                    <label class="campo__etiqueta" for="senha">Senha</label>
+                    <input type="password" name="password" class="campo__escrita" required placeholder="Digite sua senha"
+                        id='senha' />
+                </div>
 
-<main class="container">
+                <input class="formulario__botao" type="submit" value="Entrar" />
+        </form>
 
-    <form class="container__formulario" method="post">
-        <h2 class="formulario__titulo">Efetue login</h2>
-            <div class="formulario__campo">
-                <label class="campo__etiqueta" for="usuario">Usuário</label>
-                <input name="email" type="email" class="campo__escrita" required placeholder="Digite seu usuário" id='usuario' />
-            </div>
-
-
-            <div class="formulario__campo">
-                <label class="campo__etiqueta" for="senha">Senha</label>
-                <input type="password" name="password" class="campo__escrita" required placeholder="Digite sua senha" id='senha' />
-            </div>
-
-            <input class="formulario__botao" type="submit" value="Entrar" />
-    </form>
-
-</main>
-
-<?php
-// Incluí o seguinte arquivo nesse local
-require_once __DIR__ . '/fim-html.php';
+    </main>
+<?php require_once __DIR__ . '/fim-html.php'; ?>

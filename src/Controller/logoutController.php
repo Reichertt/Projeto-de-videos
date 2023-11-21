@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Alura\Mvc\Controller;
 
 // Classe responsável por deslogar o usuário da sessão
@@ -9,6 +11,6 @@ class LogoutController implements Controller
     {
         // Destroi a sessão
         session_destroy();
-        header('location: /login');
+        header('Location: /login');
     }
 }

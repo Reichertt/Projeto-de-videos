@@ -1,8 +1,8 @@
 <?php
 
-namespace Alura\Mvc\Entity;
+declare(strict_types=1);
 
-use InvalidArgumentException;
+namespace Alura\Mvc\Entity;
 
 // Classe responsável pela validção da URL e definição de entidades
 class Video
@@ -16,8 +16,10 @@ class Video
     // Define que a imagem pode ter uma string ou ser nula
     private ?string $filePath = null;
 
-    public function __construct(string $url, public readonly string $title,)
-    {
+    public function __construct(
+        string $url,
+        public readonly string $title,
+    ) {
         $this->setUrl($url);
     }
 
@@ -25,8 +27,9 @@ class Video
     private function setUrl(string $url)
     {
         if (filter_var($url, FILTER_VALIDATE_URL) === false) {
-            throw new InvalidArgumentException();
+            throw new \InvalidArgumentException();
         }
+
         $this->url = $url;
     }
 

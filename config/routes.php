@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 // Traça as rotas que são enviadas via GET e POST
 return [
     'GET|/' => \Alura\Mvc\Controller\VideoListController::class,

@@ -1,11 +1,8 @@
-<!-- Responsável pela área de manipulação da pagína, edição e exclusão. -->
-
 <?php
-
-// Incluí o seguinte arquivo nesse local
 require_once __DIR__ . '/inicio-html.php';
-/** @var ?\Alura\Mvc\Entity\Video[] $videoList */
+/** @var \Alura\Mvc\Entity\Video[] $videoList */
 ?>
+
 <ul class="videos__container">
     <?php foreach ($videoList as $video): ?>
         <li class="videos__item">
@@ -30,5 +27,4 @@ require_once __DIR__ . '/inicio-html.php';
     <?php endforeach; ?>
 </ul>
 
-<!-- Incluí o seguinte arquivo nesse local -->
 <?php require_once __DIR__ . '/fim-html.php';
