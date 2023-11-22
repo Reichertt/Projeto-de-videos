@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace Alura\Mvc\Controller;
 
-// Classe responsável por deslogar o usuário da sessão
-class LogoutController implements Controller
+use Nyholm\Psr7\Response;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+
+class LogoutController implements RequestHandlerInterface
 {
-    public function processaRequisicao(): void
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        // Destroi a sessão
         session_destroy();
-        header('Location: /login');
+        return new Response(302, ['Location' => '/login']);
     }
 }

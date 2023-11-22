@@ -2,15 +2,7 @@
 
 declare(strict_types=1);
 
-use Alura\Mvc\Controller\{
-    Controller,
-    DeleteVideoController,
-    EditVideoController,
-    Error404Controller,
-    NewVideoController,
-    VideoFormController,
-    VideoListController
-};
+use Alura\Mvc\Controller\Error404Controller;
 use Alura\Mvc\Repository\VideoRepository;
 
 // Retorna o seguinte valor nesse local
@@ -47,5 +39,26 @@ if (array_key_exists($key, $routes)) {
 } else {
     $controller = new Error404Controller();
 }
-/** @var Controller $controller */
-$controller->processaRequisicao();
+
+$psr17Factory = new \Nyholm\Psr7\Factory\Psr17Factory();
+
+$creator = new \Nyholm\Psr7Server\ServerRequestCreator(
+    $psr17Factory, // ServerRequestFactory
+    $psr17Factory, // UriFactory
+    $psr17Factory, // UploadedFileFactory
+    $psr17Factory  // StreamFactory
+);
+
+$request = $creator->fromGlobals();
+
+/** @var requestHandlerInterface $controller */
+$response = $controller->handle($request);
+
+http_response_code($response->getStatusCode());
+foreach ($response->getHeaders() as $name => $values) {
+    foreach ($values as $value) {
+        header (sprintf( '%s: %s', $name, $value), false);
+    }
+}
+
+echo $response->getBody();
