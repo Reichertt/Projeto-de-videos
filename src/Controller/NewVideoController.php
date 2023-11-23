@@ -49,6 +49,7 @@ class NewVideoController implements RequestHandlerInterface
             $mimeType = $finfo->file($tmpFile);
 
             if (str_starts_with($mimeType, 'image/')) {
+                // Move um arquivo enviado para um novo local
                 $safeFileName = uniqid('upload_') . '_' . pathinfo($uploadedImage->getClientFilename(), PATHINFO_BASENAME);
                 $uploadedImage->moveTo(__DIR__ . '/../../public/img/uploads/' . $safeFileName);
                 $video->setFilePath($safeFileName);

@@ -52,8 +52,11 @@ class EditVideoController implements RequestHandlerInterface
         $video->setId($id);
 
         $files = $request->getUploadedFiles();
+
         /** @var UploadedFileInterface $uploadedImage */
         $uploadedImage = $files['image'];
+
+        // UPLOAD_ERR_OK = erro OK ou === 0
         if ($uploadedImage->getError() === UPLOAD_ERR_OK) {
             $finfo = new \finfo(FILEINFO_MIME_TYPE);
             $tmpFile = $uploadedImage->getStream()->getMetadata('uri');
@@ -61,6 +64,8 @@ class EditVideoController implements RequestHandlerInterface
 
             if (str_starts_with($mimeType, 'image/')) {
                 $safeFileName = uniqid('upload_') . '_' . pathinfo($uploadedImage->getClientFilename(), PATHINFO_BASENAME);
+
+                // Move um arquivo enviado para um novo local
                 $uploadedImage->moveTo(__DIR__ . '/../../public/img/uploads/' . $safeFileName);
                 $video->setFilePath($safeFileName);
             }
